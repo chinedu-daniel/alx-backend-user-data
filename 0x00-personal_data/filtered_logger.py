@@ -5,6 +5,7 @@ regexing
 
 import re
 from typing import List
+import logging
 
 
 def filter_datum(fields: List[str], redaction: str,
