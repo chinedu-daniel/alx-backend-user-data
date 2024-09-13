@@ -7,5 +7,5 @@ def filter_datum(fields, redaction, message, separator):
     """
     regex-ing
     """
-    pattern = r'({})=([^{}]+)'.format('|'.join(fields), separator)
-    return re.sub(pattern, r'\1=' + redaction, message
+    pattern = '|'.join([f'(?<={field}=)[^{separator}]+' for field in fields])
+    return re.sub(pattern, redaction, message)
