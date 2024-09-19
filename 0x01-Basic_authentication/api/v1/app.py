@@ -23,7 +23,7 @@ if auth_type:
     else:
         auth = Auth()
 
-authentication_route = ['/api/v1/status/', / 
+authentication_route = ['/api/v1/status/', 
         '/api/v1/unauthorized/', '/api/v1/forbidden/']
 
 

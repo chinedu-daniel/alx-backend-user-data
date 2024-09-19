@@ -1,4 +1,5 @@
-sic  Authenication"""
+#!/usr/bin/env python3
+"""Basic  Authenication"""
 from .auth import Auth
 import base64
 from typing import TypeVar
