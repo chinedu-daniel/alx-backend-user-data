@@ -13,6 +13,7 @@ def status() -> str:
     """
     return jsonify({"status": "OK"})
 
+
 @app_views.route('/unauthorized', strict_slashes=False)
 def not_authorized():
     """Not Autorized route"""
