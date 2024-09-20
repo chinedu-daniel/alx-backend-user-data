@@ -32,13 +32,13 @@ if auth_type:
     else:
         auth = Auth()
 
+authentication_route = ['/api/v1/status/', 
+        '/api/v1/unauthorized/', '/api/v1/forbidden/']
+
 
 @app.before_request
 def before_request() -> Optional[str]:
     """Check authorization for every request"""
-
-    authentication_route = ['/api/v1/status/', 
-        '/api/v1/unauthorized/', '/api/v1/forbidden/']
     
     if auth is None:
         return
