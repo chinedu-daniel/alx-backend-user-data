@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """Hash password"""
 
-from db import DB
-from user import User
 import bcrypt
 
 
