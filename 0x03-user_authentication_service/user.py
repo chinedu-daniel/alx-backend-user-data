@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+"""Class User for ORM"""
+
+
 from sqlalchemy import Column, Integer, String
 from database_setup import Base  # Import Base from your setup file
 
