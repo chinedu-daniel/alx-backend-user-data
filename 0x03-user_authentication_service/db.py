@@ -23,6 +23,9 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
+if __name__ == "__main__":
+    db_instance = DB()
+
     @property
     def _session(self) -> Session:
         """Memoized session object
@@ -51,35 +54,38 @@ class DB:
         # Return the newly created user object
         return new_user
 
-    def find_user_by(self, **kwargs) -> Users:
-        """find_user_by"""
-        if not kwargs:
-            raise InvalidRequestError
+    # def find_user_by(self, **kwargs) -> Users:
+    #     """find_user_by"""
+    #     if not kwargs:
+    #         raise InvalidRequestError
 
-            column_names = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in column_names:
-                raise InvalidRequestError
+    #         column_names = User.__table__.columns.keys()
+    #     for key in kwargs.keys():
+    #         if key not in column_names:
+    #             raise InvalidRequestError
 
-        user = self._session.query(User).filter_by(**kwargs).first()
+    #     user = self._session.query(User).filter_by(**kwargs).first()
 
-        if user is None:
-            raise NoResultFound
+    #     if user is None:
+    #         raise NoResultFound
 
-        return user
+    #     return user
 
-    def update_user(self, user_id: int, **kwargs) -> None:
-        """ Update users attributes
-        Returns: None
-        """
-        user = self.find_user_by(id=user_id)
+    # def update_user(self, user_id: int, **kwargs) -> None:
+    #     """ Update users attributes
+    #     Returns: None
+    #     """
+    #     user = self.find_user_by(id=user_id)
 
-        column_names = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in column_names:
-                raise ValueError
+    #     column_names = User.__table__.columns.keys()
+    #     for key in kwargs.keys():
+    #         if key not in column_names:
+    #             raise ValueError
 
-        for key, value in kwargs.items():
-            setattr(user, key, value)
+    #     for key, value in kwargs.items():
+    #         setattr(user, key, value)
 
-        self._session.commit()
+    #     self._session.commit()
+
+
+    
