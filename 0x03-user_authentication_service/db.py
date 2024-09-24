@@ -5,8 +5,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.session import Session
-from sqlalchemy.exc import InvalidRequestError
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError, NoResultFound
 from typing import TypeVar
 from user import Base, User
 
@@ -51,22 +50,28 @@ class DB:
         # Return the newly created user object
         return new_user
 
-    def find_user_by(self, **kwargs) -> User:
-        """find_user_by"""
-        if not kwargs:
-            raise InvalidRequestError
+    def find_user_by(self, **kwargs):
+        # Start a query on the User model (replace User with your actual model name)
+        query = self.session.query(User)
 
-            column_names = User.__table__.columns.keys()
-        for key in kwargs.keys():
-            if key not in column_names:
-                raise InvalidRequestError
+        try:
+            # Apply filters based on the keyword arguments
+            for key, value in kwargs.items():
+                # Make sure the key is a valid attribute of User
+                if not hasattr(User, key):
+                    raise InvalidRequestError(f"Invalid field name: {key}")
 
-        user = self._session.query(User).filter_by(**kwargs).first()
+                query = query.filter(getattr(User, key) == value)
 
-        if user is None:
-            raise NoResultFound
+            # Fetch the first result
+            user = query.one()  # This will raise NoResultFound if no rows match
 
-        return user
+            return user
+
+        except NoResultFound:
+            raise NoResultFound("No user found with the given criteria.")
+        except InvalidRequestError as e:
+            raise InvalidRequestError(str(e))
 
     # def update_user(self, user_id: int, **kwargs) -> None:
     #     """ Update users attributes
