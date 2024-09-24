@@ -12,21 +12,21 @@ class Auth:
         self._db = DB()
 
     def register_user(self, email: str, password: str) -> User:
-        """ Registers new user
-            Args:
-                - email: user's email
-                - password: user's password
-            Return:
-                - User instance created
-        """
-        db = self._db
-        try:
-            user = db.find_user_by(email=email)
-        except NoResultFound:
-            user = db.add_user(email, _hash_password(password))
-            return user
-        else:
-            raise ValueError(f"User {email} already exists")
+        # Check if user already exists
+        if self._db.user_exists(email):  # Assuming this method checks for existing users
+            raise ValueError(f"User {email} already exists.")
+
+        # Hash the password
+        hashed_password = self._hash_password(password)
+
+        # Create a new User object (assuming User has an init method that accepts email and hashed_password)
+        new_user = User(email=email, password=hashed_password)
+
+        # Save the user to the database
+        self._db.save_user(new_user)  # Assuming this method saves the user object to the database
+
+        # Return the new User object
+        return new_user
 
 def _hash_password(self, password: str) -> bytes:
     # Convert the password string to bytes
