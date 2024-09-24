@@ -37,19 +37,16 @@ class DB:
         add_user
         """
         # Create a new User instance
-        new_user = User(email=email, hashed_password=hashed_password)
-
-        # Get the current session
-        session = self._session
+        user = User(email=email, hashed_password=hashed_password)
 
         # Add the new user to the session
-        self._session.add(new_user)
+        self._session.add(user)
 
         # Commit the session to save changes to the database
         self._session.commit()
 
         # Return the newly created user object
-        return new_user
+        return user
 
     def find_user_by(self, **kwargs) -> User:
         """find_user_by"""
