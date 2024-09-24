@@ -6,39 +6,32 @@ from user import User
 import bcrypt
 
 
-class Auth:
-    """Auth class to interact with the authentication database.
-    """
+def _hash_password(self, password: str) -> bytes:
+    # Convert the password string to bytes
+    password_bytes = password.encode('utf-8')
 
-    def __init__(self):
-        self._db = DB()
+    # Generate a salt
+    salt = bcrypt.gensalt()
 
-    def _hash_password(self, password: str) -> bytes:
-        # Convert the password string to bytes
-        password_bytes = password.encode('utf-8')
+    # Hash the password with the salt
+    hashed_password = bcrypt.hashpw(password_bytes, salt)
 
-        # Generate a salt
-        salt = bcrypt.gensalt()
+    # Return the hashed password as bytes
+    return hashed_password
 
-        # Hash the password with the salt
-        hashed_password = bcrypt.hashpw(password_bytes, salt)
+def register_user(self, email: str, password: str) -> User:
+    # Check if user already exists
+    if self._db.user_exists(email):  # Assuming this method checks for existing users
+        raise ValueError(f"User {email} already exists.")
 
-        # Return the hashed password as bytes
-        return hashed_password
+    # Hash the password
+    hashed_password = self._hash_password(password)
 
-    def register_user(self, email: str, password: str) -> User:
-        # Check if user already exists
-        if self._db.user_exists(email):  # Assuming this method checks for existing users
-            raise ValueError(f"User {email} already exists.")
+    # Create a new User object (assuming User has an init method that accepts email and hashed_password)
+    user = User(email=email, password=hashed_password)
 
-        # Hash the password
-        hashed_password = self._hash_password(password)
+    # Save the user to the database
+    self._db.save_user(user)  # Assuming this method saves the user object to the database
 
-        # Create a new User object (assuming User has an init method that accepts email and hashed_password)
-        user = User(email=email, password=hashed_password)
-
-        # Save the user to the database
-        self._db.save_user(user)  # Assuming this method saves the user object to the database
-
-        # Return the new User object
-        return user
+    # Return the new User object
+    return user
