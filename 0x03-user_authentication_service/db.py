@@ -23,6 +23,7 @@ class DB:
         Base.metadata.create_all(self._engine)
         self.__session = None
 
+
 if __name__ == "__main__":
     db_instance = DB()
 
@@ -86,6 +87,3 @@ if __name__ == "__main__":
     #         setattr(user, key, value)
 
     #     self._session.commit()
-
-
-    
