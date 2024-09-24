@@ -85,6 +85,5 @@ class DB:
     #     self._session.commit()
 
 
-
 if __name__ == "__main__":
     db_instance = DB()
