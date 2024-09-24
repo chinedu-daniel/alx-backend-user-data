@@ -3,6 +3,7 @@
 
 from db import DB
 from user import User
+import bcrypt
 
 
 class Auth:
@@ -13,7 +14,6 @@ class Auth:
         self._db = DB()
 
     def _hash_password(self, password: str) -> bytes:
-        import bcrypt
         # Convert the password string to bytes
         password_bytes = password.encode('utf-8')
 
