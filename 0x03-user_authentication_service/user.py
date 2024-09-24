@@ -3,7 +3,8 @@
 
 
 from sqlalchemy import Column, Integer, String
-from database_setup import Base  # Import Base from your setup file
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
 
 
 # 1. Define the User model class
